@@ -21,11 +21,18 @@ def create_database():
 	grupo TEXT,
 	marca TEXT,
 	unidade TEXT,
-	codbar TEXT
+	codbar TEXT(13)
     );
     """)
-    
-    
+    dbcursor.execute("""
+    CREATE TABLE mov_produtos (
+	"data" TEXT(10),
+    tipo TEXT(1),
+    produto TEXT,
+	quantidade NUMERIC,
+	preco NUMERIC
+    );
+    """)
     dbconn.close()
     return
 
