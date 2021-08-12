@@ -4,35 +4,45 @@ import sqlite3
 def check_db():
     files = os.listdir()
     if "db.sqlite3" in files:
-        return print("Database já existe")
+        return print("Database already exists")
     return create_database()
 
 def create_database():
     dbconn = sqlite3.connect("db.sqlite3")
     dbcursor = dbconn.cursor()
+
+    print("Creating products groups table...")
     dbcursor.execute("""
-    CREATE TABLE produtos_grupos (
-	GRUPO TEXT
+    CREATE TABLE products_groups (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	product_group TEXT
     );
     """)
+
+    print("Creating products table...")
     dbcursor.execute("""
-    CREATE TABLE produtos (
-	nome TEXT,
-	grupo TEXT,
-	marca TEXT,
-	unidade TEXT,
-	codbar TEXT(13)
+    CREATE TABLE products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	product_name TEXT,
+	product_group TEXT,
+	product_brand TEXT,
+	product_unit TEXT,
+	product_barcode TEXT(13)
     );
     """)
+
+    print("Creating products movimentations table...")
     dbcursor.execute("""
-    CREATE TABLE mov_produtos (
-	"data" TEXT(10),
-    tipo TEXT(1),
-    produto TEXT,
-	quantidade NUMERIC,
-	preco NUMERIC
+    CREATE TABLE products_movimentations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	movimentation_date TEXT(10),
+    movimentation_type TEXT(1),
+    movimentation_product TEXT(13),
+	movimentation_ammount NUMERIC,
+	movimentation_price NUMERIC
     );
     """)
+    print("Done")
     dbconn.close()
     return
 
